@@ -30,7 +30,11 @@ MainAppWindow::MainAppWindow(int w, int h, const char* l)
             mw.tileInputGroup->tileSeam->value(),
             mw.tileInputGroup->tileCost->value());
         //Check Validation Rules
-        if (mw.bussinesRules->inputValidationRule(mw.room, mw.tile, mw.roomInputGroup, mw.tileInputGroup) == false) {
+        try {
+            mw.bussinesRules->inputValidationRule(mw.room, mw.tile, mw.roomInputGroup, mw.tileInputGroup);
+        }
+        catch(std::invalid_argument& e){
+            fl_choice(e.what(), "OK", 0, 0);
             return;
         }
         //Room Square Output

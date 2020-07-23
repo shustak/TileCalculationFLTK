@@ -7,9 +7,9 @@
 #include "Buttons.h"
 #include"RoomGL_Window.h"
 #include "ResultWidgets.h"
-#include "BusinessRules.h"
-#include "Room.h"
-#include "Tile.h"
+#include "BusinessLogic1/BusinessRules/BusinessRules.h"
+#include "BusinessLogic1/RoomEntity/Room.h"
+#include "BusinessLogic1/TileEntity/Tile.h"
 #include <FL/Fl.H>
 
 class MainAppWindow :
@@ -32,6 +32,7 @@ private:
     RoomGL_Window* glWindow;
     ResultWidgets* resultGroup;
     BusinessRules* bussinesRules;
+
     Room* room;
     Tile* tile;
 };

@@ -54,42 +54,45 @@ int BusinessRules::tileAmountVertical(const Room* room, const Tile* tile)
     return vertical_answer;
 }
 
-bool BusinessRules::inputValidationRule(const Room* room, const Tile* tile, const RoomInputWidget* roomInput, const TileInputWidgets* tileInput)
-{
+void BusinessRules::inputValidationRule(
+    const Room* room, 
+    const Tile* tile, 
+    const RoomInputWidget* roomInput, 
+    const TileInputWidgets* tileInput
+){
     if (roomInput->lengthWall_1->size()<=0 || room->roomLengthWall1<=0)
     {
-        fl_choice("Please enter Room lenght wall1 value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Room lenght wall1 value more than '0'!");
     }
+
     if (roomInput->lengthWall_2->size() <= 0 || room->roomLengthWall2 <= 0)
     {
-        fl_choice("Please enter Room lenght wall2 value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Room lenght wall2 value more than '0'!");
     }
+
     if (roomInput->height->size() <= 0 || room->roomHeight <= 0)
     {
-        fl_choice("Please enter Room height value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Room height value more than '0'!");
     }
+
     if (tileInput->tileLenght->size() <= 0 || tile->tileLength <= 0)
     {
-        fl_choice("Please enter Tile lenght value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Tile lenght value more than '0'!");
     }
+
     if (tileInput->tileWidth->size() <= 0 || tile->tileWidth <= 0)
     {
-        fl_choice("Please enter Tile width value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Tile width value more than '0'!");
     }
-    if (tileInput->tileSeam->size() <= 0 || tile->seam < 0)
-    {
-        fl_choice("Please enter Tile seam value!", "OK", 0, 0);
-        return false;
-    }
+
     if (tileInput->tileCost->size() <= 0 || tile->cost <= 0)
     {
-        fl_choice("Please enter Tile cost value more than '0'!", "OK", 0, 0);
-        return false;
+        throw std::invalid_argument("Please enter Tile cost value more than '0'!");
+    }
+
+    if (tileInput->tileSeam->size() <= 0 || tile->seam < 0)
+    {
+        throw std::invalid_argument("Please enter Tile seam value!");
     }
 
     if (
@@ -98,11 +101,8 @@ bool BusinessRules::inputValidationRule(const Room* room, const Tile* tile, cons
         || room->roomHeight < tile->tileWidth
         || room->roomHeight < tile->tileLength
         || room->roomLengthWall1 < tile->tileWidth
-        || room->roomLengthWall2 < tile->tileWidth)
-    {
-        fl_choice("You Tile size more than room size! Please enter correct value!", "OK", 0, 0);
-        return false;
+        || room->roomLengthWall2 < tile->tileWidth
+    ){
+        throw std::invalid_argument("You Tile size more than room size! Please enter correct value!");
     }
-
-    return true;
 }
